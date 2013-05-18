@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Sources\Engine">
+      <UniqueIdentifier>{8b283ba6-180d-4628-95ba-7411dfe80b56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Engine\Input">
+      <UniqueIdentifier>{3ed9ad20-0c8a-4e00-8610-091cd9259e56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Engine\Graphics">
+      <UniqueIdentifier>{c1528285-1362-4ea3-a99a-daadeab3a706}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Engine\Graphics\Direct3D">
+      <UniqueIdentifier>{dae4b21d-58e1-4d8f-8599-910329476d93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Engine\Graphics\Camera">
+      <UniqueIdentifier>{75a085c8-08bc-452e-bfa4-d99d5670e9f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Engine\Graphics\Shader">
+      <UniqueIdentifier>{8e975412-8397-484a-b599-9a08ad670416}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Engine\Graphics\Model">
+      <UniqueIdentifier>{13611ed6-4db6-4bad-82a4-47f918551efa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Engine\Graphics\Shader\Shaders">
+      <UniqueIdentifier>{0a906346-5cb2-458e-a9be-f2eade4ec049}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Engine\Graphics\Model\Texture">
+      <UniqueIdentifier>{6376336f-13b5-457d-9110-ac90ffbd72c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Engine\SPH Utils">
+      <UniqueIdentifier>{de2ca63b-b049-4b91-b05c-31f5211939de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Engine\Graphics\Light">
+      <UniqueIdentifier>{a3c537a8-9e68-4ad6-9fc2-e0e73cc8ab89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Engine\Graphics\Model\3D">
+      <UniqueIdentifier>{a9aee8b0-9821-4616-89cc-c09ce8bc7317}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Engine\Graphics\Model\2D">
+      <UniqueIdentifier>{23ff865c-cfe7-4b69-8f88-73d8c235bfe7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Sources\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Sources\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics.cpp">
+      <Filter>Sources\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct3D.cpp">
+      <Filter>Sources\Engine\Graphics\Direct3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Sources\Engine\Graphics\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorShader.cpp">
+      <Filter>Sources\Engine\Graphics\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Sources\Engine\Graphics\Model\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureShader.cpp">
+      <Filter>Sources\Engine\Graphics\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="SPH_Debug.cpp">
+      <Filter>Sources\Engine\SPH Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="LightShader.cpp">
+      <Filter>Sources\Engine\Graphics\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Sources\Engine\Graphics\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Sources\Engine\Graphics\Model\3D</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Engine.h">
+      <Filter>Sources\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Sources\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics.h">
+      <Filter>Sources\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct3D.h">
+      <Filter>Sources\Engine\Graphics\Direct3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Sources\Engine\Graphics\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorShader.h">
+      <Filter>Sources\Engine\Graphics\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Sources\Engine\Graphics\Model\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureShader.h">
+      <Filter>Sources\Engine\Graphics\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="SPH_Debug.h">
+      <Filter>Sources\Engine\SPH Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="LightShader.h">
+      <Filter>Sources\Engine\Graphics\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Sources\Engine\Graphics\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Sources\Engine\Graphics\Model\3D</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader_SimpleColor.fx">
+      <Filter>Sources\Engine\Graphics\Shader\Shaders</Filter>
+    </None>
+    <None Include="Shader_SimpleTex.fx">
+      <Filter>Sources\Engine\Graphics\Shader\Shaders</Filter>
+    </None>
+    <None Include="Texture_1.dds">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="Shader_SimpleLight.fx">
+      <Filter>Sources\Engine\Graphics\Shader\Shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>

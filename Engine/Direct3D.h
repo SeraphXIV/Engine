@@ -32,6 +32,9 @@ class CDirect3D
 
 		void GetVideoCardInfo(char*, int&); // Accesseur des infos de la carte graphique
 
+		void TurnZBufferOn(); // Active le Z buffer pour afficher en 3D
+		void TurnZBufferOff(); // Desactive le Z buffer pour afficher en 2D
+
 	private:
 
 		bool m_vsync_enabled;
@@ -41,7 +44,8 @@ class CDirect3D
 		ID3D10Device* m_device;
 		ID3D10RenderTargetView* m_renderTargetView;
 		ID3D10Texture2D* m_depthStencilBuffer;
-		ID3D10DepthStencilState* m_depthStencilState;
+		ID3D10DepthStencilState* m_depthStencilState; // Depth Stencil 3D
+		ID3D10DepthStencilState* m_depthDisabledStencilState; // Depth Stencil 2D
 		ID3D10DepthStencilView* m_depthStencilView;
 		ID3D10RasterizerState* m_rasterState;
 		D3DXMATRIX m_projectionMatrix;

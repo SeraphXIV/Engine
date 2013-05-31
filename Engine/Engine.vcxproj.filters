@@ -93,6 +93,9 @@
     <ClCompile Include="Model.cpp">
       <Filter>Sources\Engine\Graphics\Model\3D</Filter>
     </ClCompile>
+    <ClCompile Include="Bitmap.cpp">
+      <Filter>Sources\Engine\Graphics\Model\2D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -130,6 +133,9 @@
     </ClInclude>
     <ClInclude Include="Model.h">
       <Filter>Sources\Engine\Graphics\Model\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Bitmap.h">
+      <Filter>Sources\Engine\Graphics\Model\2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

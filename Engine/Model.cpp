@@ -279,22 +279,22 @@ bool CModel::LoadModel(char* filename)
 
 	// Avance jusqu'au nombre de vertex
 	fin.get(input);
-	#ifdef _SPHDEBUG_H 
+	/*#ifdef _SPHDEBUG_H 
 		SPHDebug::Msg(input);
-	#endif
+	#endif*/
 	while(input != ':')
 	{
 		fin.get(input);
-		#ifdef _SPHDEBUG_H 
+		/*#ifdef _SPHDEBUG_H 
 			SPHDebug::Msg(input);
-		#endif
+		#endif*/
 	}
 
 	// Lit et enregistre le nombre de vertex
 	fin >> m_vertexCount;
-	#ifdef _SPHDEBUG_H 
+	/*#ifdef _SPHDEBUG_H 
 		SPHDebug::Msg(m_vertexCount);
-	#endif
+	#endif*/
 
 	// Le nombre d'indices est le meme que le nombre de vertices
 	m_indexCount = m_vertexCount;
@@ -302,9 +302,9 @@ bool CModel::LoadModel(char* filename)
 	// Alloue le tableau du donnees du model selon le nombre de vertex
 	m_model = new ModelType[m_vertexCount];
 	if(!m_model){
-		#ifdef _SPHDEBUG_H 
+		/*#ifdef _SPHDEBUG_H 
 			SPHDebug::Msg("\t /!\\ CModel::LoadModel() : Failed to init Model array.");
-		#endif
+		#endif*/
 		return false;}
 
 	// Avance jusqu'aux donnees
@@ -312,39 +312,39 @@ bool CModel::LoadModel(char* filename)
 	while(input != ':')
 	{
 		fin.get(input);
-		#ifdef _SPHDEBUG_H 
+		/*#ifdef _SPHDEBUG_H 
 			SPHDebug::Msg(input);
-		#endif
+		#endif*/
 	}
 	fin.get(input);
-	#ifdef _SPHDEBUG_H 
+	/*#ifdef _SPHDEBUG_H 
 		SPHDebug::Msg(input);
-	#endif
+	#endif*/
 	fin.get(input);
-	#ifdef _SPHDEBUG_H 
+	/*#ifdef _SPHDEBUG_H 
 		SPHDebug::Msg(input);
-	#endif
+	#endif*/
 
 	// Read in the vertex data.
 	for(i=0; i<m_vertexCount; i++)
 	{
 		fin >> m_model[i].x >> m_model[i].y >> m_model[i].z;
-		#ifdef _SPHDEBUG_H 
+		/*#ifdef _SPHDEBUG_H 
 			SPHDebug::Msg(m_model[i].x);
 			SPHDebug::Msg(m_model[i].y);
 			SPHDebug::Msg(m_model[i].z);
-		#endif
+		#endif*/
 		fin >> m_model[i].tu >> m_model[i].tv;
-		#ifdef _SPHDEBUG_H 
+		/*#ifdef _SPHDEBUG_H 
 			SPHDebug::Msg(m_model[i].tu);
 			SPHDebug::Msg(m_model[i].tv);
-		#endif
+		#endif*/
 		fin >> m_model[i].nx >> m_model[i].ny >> m_model[i].nz;
-		#ifdef _SPHDEBUG_H 
+		/*#ifdef _SPHDEBUG_H 
 			SPHDebug::Msg(m_model[i].nx);
 			SPHDebug::Msg(m_model[i].ny);
 			SPHDebug::Msg(m_model[i].nz);
-		#endif
+		#endif*/
 	}
 
 	// Close the model file.

@@ -11,6 +11,7 @@ CGraphics::CGraphics()
 	Direct3D = 0;
 	m_Camera = 0;
 	m_Model = 0;
+	m_Bitmap = 0;
 	m_LightShader = 0;
 	m_Light = 0;
 }
@@ -59,12 +60,28 @@ bool CGraphics::Init(int screenWidth, int screenHeight, HWND hwnd)
 	// Position initiale de la cam
 	m_Camera->SetPosition(0.0f, 0.0f, -10.0f);
 
-	// Creation de l'objet qui gere le model
+	// Creation de l'objet qui gere le model 3D
 	m_Model = new CModel;
 	// Test de succes
 	if(!m_Model){
 		#ifdef _SPHDEBUG_H 
-			SPHDebug::Msg("\t /!\\ CGraphics::Init() : Failed to create new Model"); 
+			SPHDebug::Msg("\t /!\\ CGraphics::Init() : Failed to create new 3D Model"); 
+		#endif
+		return false;}
+
+	// Creation de l'objet qui gere le model 2D
+	m_Bitmap = new CBitmap;
+	if(!m_Bitmap){
+		#ifdef _SPHDEBUG_H 
+			SPHDebug::Msg("\t /!\\ CGraphics::Init() : Failed to create new 2D Model"); 
+		#endif
+		return false;}
+
+	// Init l'objet bitmap
+	bResult = m_Bitmap->Init(Direct3D->GetDevice(), screenWidth, screenHeight, L"../Engine/Texture_1.dds", 256, 256);
+	if(!bResult){
+		#ifdef _SPHDEBUG_H 
+			SPHDebug::Msg("\t /!\\ CGraphics::Init() : Failed to init 2D Model"); 
 		#endif
 		return false;}
 
@@ -139,6 +156,11 @@ void CGraphics::Shutdown()
 		delete m_Model;
 		m_Model = 0;}
 
+	if(m_Bitmap){
+		m_Bitmap->Shutdown();
+		delete m_Bitmap;
+		m_Bitmap = 0;}
+
 	if(m_Camera){
 		delete m_Camera;
 		m_Camera = 0;}
@@ -175,7 +197,8 @@ bool CGraphics::Frame()
 //////////////////////////////////////////////////////////////////////////////////////////
 bool CGraphics::Render(float rotation)
 {
-	D3DXMATRIX viewMatrix, projectionMatrix, worldMatrix;
+	D3DXMATRIX viewMatrix, projectionMatrix, worldMatrix, orthoMatrix, view2DMatrix, world2DMatrix;
+	bool result;
 
 	// Vide les buffers pour commencer
 	Direct3D->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
@@ -187,6 +210,9 @@ bool CGraphics::Render(float rotation)
 	m_Camera->GetViewMatrix(viewMatrix);
 	Direct3D->GetWorldMatrix(worldMatrix);
 	Direct3D->GetProjectionMatrix(projectionMatrix);
+	Direct3D->GetOrthoMatrix(orthoMatrix);
+	D3DXMatrixIdentity(&view2DMatrix);
+	D3DXMatrixIdentity(&world2DMatrix);
 
 	// Rotate the world matrix by the rotation value so that the triangle will spin.
 	D3DXMatrixRotationY(&worldMatrix, rotation);
@@ -196,6 +222,17 @@ bool CGraphics::Render(float rotation)
 
 	// Affiche le model en utlisant le shader
 	m_LightShader->Render(Direct3D->GetDevice(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, m_Model->GetTexture(), m_Light->GetDirection(), m_Light->GetDiffuseColor(), m_Light->GetAmbientColor(), m_Camera->GetPosition(), m_Light->GetSpecularColor(), m_Light->GetSpecularPower());
+	
+	Direct3D->TurnZBufferOff();
+	result = m_Bitmap->Render(Direct3D->GetDevice(), 100, 100);
+	if(!result)
+	{
+		return false;
+	}
+	m_LightShader->Render(Direct3D->GetDevice(), m_Bitmap->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Bitmap->GetTexture(), m_Light->GetDirection(), m_Light->GetDiffuseColor(), m_Light->GetAmbientColor(), m_Camera->GetPosition(), m_Light->GetSpecularColor(), m_Light->GetSpecularPower());
+	
+	Direct3D->TurnZBufferOn();
+
 	// Affichage de la scene calculee
 	Direct3D->EndScene();
 

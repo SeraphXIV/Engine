@@ -13,6 +13,7 @@ CDirect3D::CDirect3D()
 	m_renderTargetView = 0;
 	m_depthStencilBuffer = 0;
 	m_depthStencilState = 0;
+	m_depthDisabledStencilState = 0;
 	m_depthStencilView = 0;
 	m_rasterState = 0;
 }
@@ -47,6 +48,7 @@ bool CDirect3D::Init(int screenWidth, int screenHeight, bool vsync, HWND hwnd, b
 	D3D10_VIEWPORT viewport;
 	float fieldOfView, screenAspect;
 	D3D10_RASTERIZER_DESC rasterDesc;
+	D3D10_DEPTH_STENCIL_DESC depthDisabledStencilDesc;
 
 
 	// Sauvegarde des options de sync verticale
@@ -313,7 +315,7 @@ bool CDirect3D::Init(int screenWidth, int screenHeight, bool vsync, HWND hwnd, b
 	// Test de succes
 	if(FAILED(result)){
 		#ifdef _SPHDEBUG_H 
-			SPHDebug::Msg("\t /!\\ CDirect3D::Init() : Failed to create depth stencil state."); 
+			SPHDebug::Msg("\t /!\\ CDirect3D::Init() : Failed to create 3D depth stencil state."); 
 		#endif
 		return false;}
 	// Liaison du depth stencil state au D3D device
@@ -388,6 +390,33 @@ bool CDirect3D::Init(int screenWidth, int screenHeight, bool vsync, HWND hwnd, b
 	// Creation de la matrice orthographique, pour l'affichage de choses en 2D (interface, etc)
 	D3DXMatrixOrthoLH(&m_orthoMatrix, (float)screenWidth, (float)screenHeight, screenNear, screenDepth);
 
+	// Met le second depth stencil state a zero avant de le remplir
+	ZeroMemory(&depthDisabledStencilDesc, sizeof(depthDisabledStencilDesc));
+
+	// Cree un second depth stencil state qui desactive Z pour dessiner en 2D
+	depthDisabledStencilDesc.DepthEnable = false;
+	depthDisabledStencilDesc.DepthWriteMask = D3D10_DEPTH_WRITE_MASK_ALL;
+	depthDisabledStencilDesc.DepthFunc = D3D10_COMPARISON_LESS;
+	depthDisabledStencilDesc.StencilEnable = true;
+	depthDisabledStencilDesc.StencilReadMask = 0xFF;
+	depthDisabledStencilDesc.StencilWriteMask = 0xFF;
+	depthDisabledStencilDesc.FrontFace.StencilFailOp = D3D10_STENCIL_OP_KEEP;
+	depthDisabledStencilDesc.FrontFace.StencilDepthFailOp = D3D10_STENCIL_OP_INCR;
+	depthDisabledStencilDesc.FrontFace.StencilPassOp = D3D10_STENCIL_OP_KEEP;
+	depthDisabledStencilDesc.FrontFace.StencilFunc = D3D10_COMPARISON_ALWAYS;
+	depthDisabledStencilDesc.BackFace.StencilFailOp = D3D10_STENCIL_OP_KEEP;
+	depthDisabledStencilDesc.BackFace.StencilDepthFailOp = D3D10_STENCIL_OP_DECR;
+	depthDisabledStencilDesc.BackFace.StencilPassOp = D3D10_STENCIL_OP_KEEP;
+	depthDisabledStencilDesc.BackFace.StencilFunc = D3D10_COMPARISON_ALWAYS;
+
+	// Cree le second depth stencil state
+	result = m_device->CreateDepthStencilState(&depthDisabledStencilDesc, &m_depthDisabledStencilState);
+	if(FAILED(result)){
+		#ifdef _SPHDEBUG_H 
+			SPHDebug::Msg("\t /!\\ CDirect3D::Init() : Failed to create 2D depth stencil state."); 
+		#endif
+		return false;}
+
 	return true;
 }
 
@@ -415,6 +444,10 @@ void CDirect3D::Shutdown()
 	if(m_depthStencilState){
 		m_depthStencilState->Release();
 		m_depthStencilState = 0;}
+
+	if(m_depthDisabledStencilState){
+		m_depthDisabledStencilState->Release();
+		m_depthDisabledStencilState = 0;}
 
 	if(m_depthStencilBuffer){
 		m_depthStencilBuffer->Release();
@@ -466,6 +499,10 @@ void CDirect3D::EndScene()
 		// Affiche le plus vite possible sinon
 		m_swapChain->Present(0, 0);}
 }
+
+// Swap d'un depth stencil state a l'autre
+void CDirect3D::TurnZBufferOn(){m_device->OMSetDepthStencilState(m_depthStencilState, 1);}
+void CDirect3D::TurnZBufferOff(){m_device->OMSetDepthStencilState(m_depthDisabledStencilState, 1);}
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //			Acces au Device																//

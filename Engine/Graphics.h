@@ -10,6 +10,7 @@
 #include "Model.h"
 #include "LightShader.h"
 #include "Light.h"
+#include "Bitmap.h"
 
 // Variables globales, c'est pas bien, mais bon, ca passe pour celles la
 const bool FULL_SCREEN = false;
@@ -36,7 +37,8 @@ class CGraphics
 		bool bFrame; // bool de test
 		CDirect3D* Direct3D; // Classe qui gere D3D
 		CCamera* m_Camera; // Classe qui gere la camera
-		CModel* m_Model; // Classe qui gere le model
+		CModel* m_Model; // Classe qui gere le model 3D
+		CBitmap* m_Bitmap; // Classe qui gere le model 2D
 		CLightShader* m_LightShader; // Classe qui gere le shader
 		CLight* m_Light; // Classe qui gere la lumiere
 };

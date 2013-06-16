@@ -52,6 +52,27 @@
     <Filter Include="Sources\Engine\Graphics\Model\2D">
       <UniqueIdentifier>{23ff865c-cfe7-4b69-8f88-73d8c235bfe7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sources\Engine\Graphics\Text">
+      <UniqueIdentifier>{fb4d3254-8d0e-423a-b72e-a7075811da53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Engine\Graphics\Text\Font">
+      <UniqueIdentifier>{48c83c48-3b5b-40d4-95eb-e618a53d1d24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Engine\Graphics\Text\Shader">
+      <UniqueIdentifier>{517d1fdb-68c6-4855-aeb6-a67f1bb1b365}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Others">
+      <UniqueIdentifier>{5a73d84a-e628-4a44-ac80-f08d3384b799}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Shader">
+      <UniqueIdentifier>{93c483a5-d41a-4824-a735-280a34d63cdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Shader\3D">
+      <UniqueIdentifier>{5ab573b8-f1d0-40b7-a681-5de7aa270939}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Shader\2D">
+      <UniqueIdentifier>{5ebc6ca1-c3a6-41d8-b95e-b7280d80ab46}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -96,6 +117,15 @@
     <ClCompile Include="Bitmap.cpp">
       <Filter>Sources\Engine\Graphics\Model\2D</Filter>
     </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>Sources\Engine\Graphics\Text\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="FontShader.cpp">
+      <Filter>Sources\Engine\Graphics\Text\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>Sources\Engine\Graphics\Text</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -137,19 +167,46 @@
     <ClInclude Include="Bitmap.h">
       <Filter>Sources\Engine\Graphics\Model\2D</Filter>
     </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>Sources\Engine\Graphics\Text\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="FontShader.h">
+      <Filter>Sources\Engine\Graphics\Text\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>Sources\Engine\Graphics\Text</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shader_SimpleColor.fx">
-      <Filter>Sources\Engine\Graphics\Shader\Shaders</Filter>
+    <None Include="Cube.txt">
+      <Filter>Resources\Others</Filter>
     </None>
-    <None Include="Shader_SimpleTex.fx">
-      <Filter>Sources\Engine\Graphics\Shader\Shaders</Filter>
+    <None Include="Font_1.dds">
+      <Filter>Resources\Others</Filter>
+    </None>
+    <None Include="Font_1.txt">
+      <Filter>Resources\Others</Filter>
+    </None>
+    <None Include="SPHDebug.txt">
+      <Filter>Resources\Others</Filter>
     </None>
     <None Include="Texture_1.dds">
-      <Filter>Resources</Filter>
+      <Filter>Resources\Others</Filter>
+    </None>
+    <None Include="TODO List.txt">
+      <Filter>Resources\Others</Filter>
+    </None>
+    <None Include="Shader_SimpleColor.fx">
+      <Filter>Resources\Shader\3D</Filter>
     </None>
     <None Include="Shader_SimpleLight.fx">
-      <Filter>Sources\Engine\Graphics\Shader\Shaders</Filter>
+      <Filter>Resources\Shader\3D</Filter>
+    </None>
+    <None Include="Shader_SimpleTex.fx">
+      <Filter>Resources\Shader\3D</Filter>
+    </None>
+    <None Include="Font_1.fx">
+      <Filter>Resources\Shader\2D</Filter>
     </None>
   </ItemGroup>
 </Project>

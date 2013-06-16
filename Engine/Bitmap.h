@@ -42,7 +42,7 @@ class CBitmap
 		ID3D10Buffer *m_indexBuffer; // Index buffer
 		int m_vertexCount; // Taille du vertex buffer
 		int m_indexCount; // Taille de l'index buffer
-		CTexture* m_texture; // Texture du model
+		CTexture* m_Texture; // Texture du model
 
 		int m_screenWidth, m_screenHeight; // Taille de l'ecran
 		int m_bitmapWidth, m_bitmapHeight; // Position de l'image 2D

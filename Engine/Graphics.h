@@ -11,6 +11,7 @@
 #include "LightShader.h"
 #include "Light.h"
 #include "Bitmap.h"
+#include "Text.h"
 
 // Variables globales, c'est pas bien, mais bon, ca passe pour celles la
 const bool FULL_SCREEN = false;
@@ -41,6 +42,7 @@ class CGraphics
 		CBitmap* m_Bitmap; // Classe qui gere le model 2D
 		CLightShader* m_LightShader; // Classe qui gere le shader
 		CLight* m_Light; // Classe qui gere la lumiere
+		CText* m_Text; // Classe qui gere la police
 };
 
 #endif // Fin du test du pre-proc

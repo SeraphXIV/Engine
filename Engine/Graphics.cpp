@@ -14,6 +14,7 @@ CGraphics::CGraphics()
 	m_Bitmap = 0;
 	m_LightShader = 0;
 	m_Light = 0;
+	m_Text = 0;
 }
 // On ne s'en servira pas
 CGraphics::CGraphics(const CGraphics& osef){}
@@ -30,6 +31,7 @@ bool CGraphics::Init(int screenWidth, int screenHeight, HWND hwnd)
 
 	// Declaration des variables
 	bool bResult; // bool de test
+	D3DXMATRIX baseViewMatrix; // Matrice de vue 2D
 
 	// Creation de l'objet qui gere D3D
 	Direct3D = new CDirect3D;
@@ -57,6 +59,12 @@ bool CGraphics::Init(int screenWidth, int screenHeight, HWND hwnd)
 			SPHDebug::Msg("\t /!\\ CGraphics::Init() : Failed to create new Camera"); 
 		#endif
 		return false;}
+
+	// Mise en place de la cam pour recup une matrice de vue 2D
+	m_Camera->SetPosition(0.0f, 0.0f, -1.0f);
+	m_Camera->Update();
+	m_Camera->GetViewMatrix(baseViewMatrix);
+
 	// Position initiale de la cam
 	m_Camera->SetPosition(0.0f, 0.0f, -10.0f);
 
@@ -85,7 +93,7 @@ bool CGraphics::Init(int screenWidth, int screenHeight, HWND hwnd)
 		#endif
 		return false;}
 
-	// Initialisation
+	// Init l'objet 3D
 	bResult = m_Model->Init(Direct3D->GetDevice(), "../Engine/Cube.txt", L"../Engine/Texture_1.dds");
 	// Test de succes
 	if(!bResult){
@@ -131,6 +139,22 @@ bool CGraphics::Init(int screenWidth, int screenHeight, HWND hwnd)
 	m_Light->SetSpecularColor(1.0f, 1.0f, 1.0f, 1.0f);
 	m_Light->SetSpecularPower(32.0f);
 
+	// Cree l'objet qui gere la police
+	m_Text = new CText;
+	if(!m_Text){
+		#ifdef _SPHDEBUG_H 
+			SPHDebug::Msg("\t /!\\ CGraphics::Init() : Failed to create Text"); 
+		#endif
+		return false;}
+
+	// Initialize the text object.
+	bResult = m_Text->Init(Direct3D->GetDevice(), hwnd, screenWidth, screenHeight, baseViewMatrix);
+	if(!bResult){
+		#ifdef _SPHDEBUG_H 
+			SPHDebug::Msg("\t /!\\ CGraphics::Init() : Failed to init Text"); 
+		#endif
+		return false;}
+
 	return true;
 }
 
@@ -165,6 +189,11 @@ void CGraphics::Shutdown()
 		delete m_Camera;
 		m_Camera = 0;}
 
+	if(m_Text){
+		m_Text->Shutdown();
+		delete m_Text;
+		m_Text = 0;}
+
 	if(Direct3D){
 		Direct3D->Shutdown();
 		delete Direct3D;
@@ -197,7 +226,7 @@ bool CGraphics::Frame()
 //////////////////////////////////////////////////////////////////////////////////////////
 bool CGraphics::Render(float rotation)
 {
-	D3DXMATRIX viewMatrix, projectionMatrix, worldMatrix, orthoMatrix, view2DMatrix, world2DMatrix;
+	D3DXMATRIX viewMatrix, projectionMatrix, worldMatrix, orthoMatrix;
 	bool result;
 
 	// Vide les buffers pour commencer
@@ -206,31 +235,30 @@ bool CGraphics::Render(float rotation)
 	// Genere une matrice de vue basee sur la position actuelle de la cam
 	m_Camera->Update();
 
-	// Accede aux trois matrices
+	// Accede aux matrices
 	m_Camera->GetViewMatrix(viewMatrix);
 	Direct3D->GetWorldMatrix(worldMatrix);
 	Direct3D->GetProjectionMatrix(projectionMatrix);
 	Direct3D->GetOrthoMatrix(orthoMatrix);
-	D3DXMatrixIdentity(&view2DMatrix);
-	D3DXMatrixIdentity(&world2DMatrix);
 
 	// Rotate the world matrix by the rotation value so that the triangle will spin.
-	D3DXMatrixRotationY(&worldMatrix, rotation);
+	//D3DXMatrixRotationY(&worldMatrix, rotation);
+	m_Model->RotationY(rotation);
 
 	// Envoi les vertex et index buffer dans la pipeline graphique pour les preparer a l'affichage
 	m_Model->Render(Direct3D->GetDevice());
 
 	// Affiche le model en utlisant le shader
-	m_LightShader->Render(Direct3D->GetDevice(), m_Model->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix, m_Model->GetTexture(), m_Light->GetDirection(), m_Light->GetDiffuseColor(), m_Light->GetAmbientColor(), m_Camera->GetPosition(), m_Light->GetSpecularColor(), m_Light->GetSpecularPower());
+	m_LightShader->Render(Direct3D->GetDevice(), m_Model->GetIndexCount(), m_Model->GetWorldMatrix(), viewMatrix, projectionMatrix, m_Model->GetTexture(), m_Light->GetDirection(), m_Light->GetDiffuseColor(), m_Light->GetAmbientColor(), m_Camera->GetPosition(), m_Light->GetSpecularColor(), m_Light->GetSpecularPower());
 	
 	Direct3D->TurnZBufferOff();
-	result = m_Bitmap->Render(Direct3D->GetDevice(), 100, 100);
+	/*result = m_Bitmap->Render(Direct3D->GetDevice(), 100, 100);
 	if(!result)
 	{
 		return false;
 	}
 	m_LightShader->Render(Direct3D->GetDevice(), m_Bitmap->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Bitmap->GetTexture(), m_Light->GetDirection(), m_Light->GetDiffuseColor(), m_Light->GetAmbientColor(), m_Camera->GetPosition(), m_Light->GetSpecularColor(), m_Light->GetSpecularPower());
-	
+	*/m_Text->Render(Direct3D->GetDevice(), worldMatrix, orthoMatrix);
 	Direct3D->TurnZBufferOn();
 
 	// Affichage de la scene calculee

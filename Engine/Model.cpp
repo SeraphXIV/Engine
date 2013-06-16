@@ -28,6 +28,9 @@ bool CModel::Init(ID3D10Device* device,  char* modelFilename, WCHAR* textureFile
 
 	bool bResult; // bool de test
 
+	// Mise a zero de la matrice de position
+	D3DXMatrixIdentity(&m_worldMatrix);
+
 	// Load in the model data.
 	bResult = LoadModel(modelFilename);
 	if(!bResult){
@@ -87,16 +90,17 @@ void CModel::Render(ID3D10Device* device)
 //////////////////////////////////////////////////////////////////////////////////////////
 //			Accesseur																	//
 //////////////////////////////////////////////////////////////////////////////////////////
-int CModel::GetIndexCount()
-{
+int CModel::GetIndexCount(){
 	// Renvoi la taille de l'index buffer, le shader va en avoir besoin
-	return m_indexCount;
-}
-ID3D10ShaderResourceView* CModel::GetTexture()
-{
+	return m_indexCount;}
+
+ID3D10ShaderResourceView* CModel::GetTexture(){
 	// Renvoi la ressource texture
-	return m_texture->GetTexture();
-}
+	return m_texture->GetTexture();}
+
+D3DXMATRIX CModel::GetWorldMatrix(){
+	// Renvoi la matrice de position
+	return m_worldMatrix;}
 //////////////////////////////////////////////////////////////////////////////////////////
 //			Chargement																	//
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -251,7 +255,7 @@ bool CModel::LoadTexture(ID3D10Device* device, WCHAR* filename)
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
-//			Chargement Texture															//
+//			Chargement Model															//
 //////////////////////////////////////////////////////////////////////////////////////////
 bool CModel::LoadModel(char* filename)
 {
@@ -369,10 +373,6 @@ void CModel::ReleaseModel()
 
 	return;
 }
-
-//////////////////////////////////////////////////////////////////////////////////////////
-//			Destruction																	//
-//////////////////////////////////////////////////////////////////////////////////////////
 void CModel::ShutdownBuffers()
 {
 	// Destructeur perso, plus propre que celui de base
@@ -427,4 +427,12 @@ void CModel::RenderBuffers(ID3D10Device* device)
 	device->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	return;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+//			Transformations matricielles												//
+//////////////////////////////////////////////////////////////////////////////////////////
+void CModel::RotationY(float in_rotation)
+{
+	D3DXMatrixRotationY(&m_worldMatrix, in_rotation);
 }

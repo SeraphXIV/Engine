@@ -40,7 +40,11 @@ class CModel
 		void Render(ID3D10Device*); // Envoi les donnees a la CG
 
 		int GetIndexCount(); // Accesseur du nombre d'indices
+		D3DXMATRIX GetWorldMatrix();
 		ID3D10ShaderResourceView* GetTexture(); // Accesseur a la texture du model
+
+		// Transformations matricielles
+		void RotationY(float);
 
 	private:
 		bool InitBuffers(ID3D10Device*);
@@ -64,6 +68,7 @@ class CModel
 		unsigned int offset; // Offset du vertex buffer
 		CTexture* m_texture; // Texture du model
 		ModelType* m_model; // Tableau des donnees du fichier externe du model
+		D3DXMATRIX m_worldMatrix;
 };
 
 #endif // Fin du test du pre-proc

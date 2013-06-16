@@ -1,5 +1,3 @@
-// Shader simple + texture
-
 // Global
 matrix worldMatrix;
 matrix viewMatrix;

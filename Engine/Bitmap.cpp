@@ -10,7 +10,7 @@ CBitmap::CBitmap()
 	// Mise a zero des variables et pointeurs
 	m_vertexBuffer = 0;
 	m_indexBuffer = 0;
-	m_texture = 0;
+	m_Texture = 0;
 }
 // On ne s'en servira pas
 CBitmap::CBitmap(const CBitmap& osef){}
@@ -150,7 +150,6 @@ bool CBitmap::InitBuffers(ID3D10Device* device)
 	return true;
 }
 
-
 //////////////////////////////////////////////////////////////////////////////////////////
 //			Destruction																	//
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -186,10 +185,10 @@ void CBitmap::ShutdownBuffers()
 void CBitmap::ReleaseTexture()
 {
 	// Release l'objet de texture
-	if(m_texture){
-		m_texture->Shutdown();
-		delete m_texture;
-		m_texture = 0;}
+	if(m_Texture){
+		m_Texture->Shutdown();
+		delete m_Texture;
+		m_Texture = 0;}
 
 	#ifdef _SPHDEBUG_H 
 		SPHDebug::Msg("CBitmap::ReleaseTexture()");
@@ -319,15 +318,15 @@ bool CBitmap::LoadTexture(ID3D10Device* device, WCHAR* filename)
 	bool bResult;
 
 	// Create the texture object.
-	m_texture = new CTexture;
-	if(!m_texture){
+	m_Texture = new CTexture;
+	if(!m_Texture){
 		#ifdef _SPHDEBUG_H 
 			SPHDebug::Msg("\t /!\\ CBitmap::LoadTexture() : Failed to create texture.");
 		#endif
 		return false;}
 
 	// Initialize the texture object.
-	bResult = m_texture->Init(device, filename);
+	bResult = m_Texture->Init(device, filename);
 	if(!bResult){
 		#ifdef _SPHDEBUG_H 
 			SPHDebug::Msg("\t /!\\ CBitmap::LoadTexture() : Failed to init texture.");
@@ -341,4 +340,4 @@ bool CBitmap::LoadTexture(ID3D10Device* device, WCHAR* filename)
 //			Accesseur																	//
 //////////////////////////////////////////////////////////////////////////////////////////
 int CBitmap::GetIndexCount(){return m_indexCount;}
-ID3D10ShaderResourceView* CBitmap::GetTexture(){return m_texture->GetTexture();}
+ID3D10ShaderResourceView* CBitmap::GetTexture(){return m_Texture->GetTexture();}

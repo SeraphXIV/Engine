@@ -1,0 +1,5 @@
+
+- Nouveau shader bitmap
+- Instancier la police
+- Instancier les models
+- Instancier les bitmap
